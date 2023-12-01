@@ -1,19 +1,5 @@
 ﻿namespace Students
 {
-    public class Student
-    {
-        public string firstName { get; set; }
-       public string lastName { get; set; }
-        public double grade { get; set; }
-
-        public Student(string firstName, string lastName, double grade)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.grade = grade;
-        }
-    }
-
     public class Program
     {
         static void Main(string[] args)
@@ -35,10 +21,10 @@
                 
             }
 
-           var sortedList = students.OrderByDescending(student => student.grade);
+           var sortedList = students.OrderByDescending(student => student.Grade);
             foreach(Student student in sortedList)
             {
-                Console.WriteLine($"{student.firstName} {student.lastName} {student.grade}");
+                Console.WriteLine($"{student.FirstName} {student.LastName} {student.Grade}");
             }
 
         }
