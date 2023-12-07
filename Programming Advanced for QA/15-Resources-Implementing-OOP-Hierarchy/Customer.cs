@@ -6,17 +6,28 @@ using System.Threading.Tasks;
 
 namespace ExerciseOopHierarchy
 {
-    internal class Customer
+   public class Customer
     {
-        private List<MenuItem> _orderHistory;
-        public Name
-        •	Field _orderHistory – list of menu items.
-•	Property Name – string.
-•	Property Email – string.
-•	Property OrderHistory – read only order collection from _orderHistrory.
-•	Method override ToString() - "{this.Name} - {this.Description} - ${this.Price}".
-•	Constructor accepting the two properties.
-•	Method AddOrder(Order order) – adds the given order to the _orderHistory list.
+        private List<Order> _orderHistory = new();
+        public IReadOnlyCollection<Order> OrderHistory => this._orderHistory.AsReadOnly();
+
+        public string Name { get; set; }
+        public string Email {  get; set; }
+
+        public Customer(string name, string email)
+        {
+            this.Name = name;
+            this.Email = email;             
+        }
+        public void AddOrder(Order order)
+        {
+            this._orderHistory.Add(order);
+
+        }
+        public override string ToString()
+        {
+            return "{this.Name} - {this.Description} - ${this.Price}";
+        }
 
     }
 }

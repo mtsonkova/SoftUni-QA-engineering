@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExerciseOopHierarchy
+namespace ExerciseOopHierarchy.MenuItems
 {
-    internal class DessertMenuItem : MenuItem
+    public class DessertMenuItem : MenuItem
     {
         public DessertMenuItem(string name, string description, decimal price) : base(name, description, price)
         {
