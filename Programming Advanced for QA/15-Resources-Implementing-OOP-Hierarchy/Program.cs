@@ -2,7 +2,7 @@
 using ExerciseOopHierarchy.MenuItems;
 using System;
 
-Console.WriteLine("Uncomment the code!");
+//Console.WriteLine("Uncomment the code!");
 
  Restaurant restaurant = new();
 
