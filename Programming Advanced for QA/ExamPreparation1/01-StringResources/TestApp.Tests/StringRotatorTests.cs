@@ -32,18 +32,30 @@ public class StringRotatorTests
     [Test]
     public void Test_RotateRight_RotateByPositivePositions_ReturnsRotatedString()
     {
-        // TODO: finish the test
+        string input = "abcd";
+        int position = 1;
+        string expected = "dabc";
+        string actual = StringRotator.RotateRight(input, position);
+        Assert.AreEqual(expected, actual);
     }
 
     [Test]
     public void Test_RotateRight_RotateByNegativePositions_ReturnsRotatedString()
     {
-        // TODO: finish the test
+        string input = "abcd";
+        int position = -1;
+        string expected = "dabc";
+        string actual = StringRotator.RotateRight(input, position);
+        Assert.AreEqual(expected, actual);
     }
 
     [Test]
     public void Test_RotateRight_RotateByMorePositionsThanStringLength_ReturnsRotatedString()
     {
-        // TODO: finish the test
+        string input = "I am a string";
+        int position = 15;
+        string expected = "ngI am a stri";
+        string actual = StringRotator.RotateRight(input, position);
+        Assert.AreEqual(expected, actual);
     }
 }
