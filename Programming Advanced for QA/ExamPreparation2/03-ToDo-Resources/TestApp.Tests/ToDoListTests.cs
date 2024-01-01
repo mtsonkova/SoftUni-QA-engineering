@@ -57,6 +57,17 @@ public class ToDoListTests
     [Test]
     public void Test_DisplayTasks_WithTasks_ReturnsFormattedToDoList()
     {
-        // TODO: finish the test
+        DateTime dueDate1 = new DateTime(2024, 1, 1);
+        DateTime dueDate2 = new DateTime(2024, 1, 9);
+        DateTime dueDate3 = new DateTime(2024, 1, 3);
+        this._toDoList.AddTask("Watch a movie", dueDate1);
+        this._toDoList.AddTask("Solve problem 2", dueDate2);
+        this._toDoList.AddTask("Watch lection 4", dueDate3);
+       
+        this._toDoList.CompleteTask("Solve problem 2");
+        String expected = "To-Do List:"+ Environment.NewLine + "[ ] Watch a movie - Due: 01/01/2024" + Environment.NewLine
+            + "[✓] Solve problem 2 - Due: 01/09/2024" + Environment.NewLine + "[ ] Watch lection 4 - Due: 01/03/2024";
+        String actual = this._toDoList.DisplayTasks();
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }
