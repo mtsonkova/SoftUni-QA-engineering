@@ -43,13 +43,15 @@ public class ToDoListTests
     [Test]
     public void Test_CompleteTask_TaskNotFound_ThrowsArgumentException()
     {
-        // TODO: finish the test
+        //Arrange Act and Assert
+        Assert.Throws<ArgumentException>(() => this._toDoList.CompleteTask("Watch lection 1"));
     }
 
     [Test]
     public void Test_DisplayTasks_NoTasks_ReturnsEmptyString()
     {
-        // TODO: finish the test
+        //Arrange Act and Assert
+        Assert.That(this._toDoList.DisplayTasks(), Is.EqualTo("To-Do List:"));
     }
 
     [Test]
