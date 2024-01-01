@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using NUnit.Framework;
 
@@ -20,8 +20,8 @@ public class ToDoListTests
     [Test]
     public void Test_AddTask_TaskAddedToToDoList()
     {
-        _toDoList.AddTask("Wash the dishes", DateTime.Now);
-        string toDoList = _toDoList.DisplayTasks();
+        _toDoList.AddTask("Solve problem 1", DateTime.Now);
+        string toDoList = this._toDoList.DisplayTasks();
         bool hasTask = toDoList.Contains("Wash the dishes");
         Assert.IsTrue(hasTask);
     }
@@ -29,7 +29,13 @@ public class ToDoListTests
     [Test]
     public void Test_CompleteTask_TaskMarkedAsCompleted()
     {
-        _toDoList.CompleteTask("Wash the dishes");
+        DateTime dueDate = new DateTime(2024, 5, 1);
+        this._toDoList.AddTask("Watch a movie", DateTime.Now);
+        this._toDoList.AddTask("Solve problem 2", dueDate);
+
+        this._toDoList.CompleteTask("Solve problem 2");
+        String allTasks = this._toDoList.DisplayTasks();
+        Assert.That(allTasks.Contains("Watch a movie - Due: 01/01/2024\r\n[✓]"));
 
 
     }
