@@ -8,19 +8,15 @@ namespace Articles
 {
     internal class Article
     {
-        private string title { get; set; }
-        private string content { get; set; }
-        private string author { get; set; }
+        public string title { get; set; }
+        public string content { get; set; }
+        public string author { get; set; }
 
         public Article(string title, string content, string author) {
             this.title = title;
             this.content = content;
             this.author = author;
         }
-
-        public string Title { get { return title; } set { title = value; } }
-        public string Content { get { return content; } set { content = value; } }
-        public string Author { get { return author; } set { author = value; } }
 
         public void Edit(string content)
         {
