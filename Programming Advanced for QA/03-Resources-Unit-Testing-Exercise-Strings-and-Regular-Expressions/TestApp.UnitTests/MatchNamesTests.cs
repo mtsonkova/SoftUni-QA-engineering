@@ -21,12 +21,26 @@ public class MatchNamesTests
     [Test]
     public void Test_Match_NoValidNames_ReturnsEmptyString()
     {
-        // TODO: finish the test
+        string names = "john smith and alice johnson";
+        string expected = string.Empty;
+
+        // Act
+        string result = MatchNames.Match(names);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_Match_EmptyInput_ReturnsEmptyString()
     {
-        // TODO: finish the test
+        string names =string.Empty;
+        string expected = string.Empty; ;
+
+        // Act
+        string result = MatchNames.Match(names);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
