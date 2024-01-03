@@ -20,9 +20,9 @@ public class EmailValidatorTests
     }
 
     // TODO: finish the test
-    //[TestCase()]
-    //[TestCase()]
-    //[TestCase()]
+    [TestCase(".com")]
+    [TestCase("testcase")]
+    [TestCase("test@case")]
     public void Test_InvalidEmails_ReturnsFalse(string email)
     {
         // Arrange
