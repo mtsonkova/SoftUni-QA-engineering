@@ -11,28 +11,61 @@ public class TextFilterTests
     public void Test_Filter_WhenNoBannedWords_ShouldReturnOriginalText()
     {
         // Arrange
+        string[] bannedWords = { "crap", "hell" };
+        string text = "Lorem ipsum dolor sit amet.";
+        string expected = "Lorem ipsum dolor sit amet.";
 
         // Act
+        string result = TextFilter.Filter(bannedWords, text);
 
         // Assert
-        //Assert.That(result, Is.EqualTo(text));
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_Filter_WhenBannedWordExists_ShouldReplaceBannedWordWithAsterisks()
     {
-        // TODO: finish the test
+        //Arrange
+        string[] bannedWords = { "crap", "hell" };
+        string text = "Holly crap! Why don't you go to hell!!!";
+        string expected = "Holly ****! Why don't you go to ****!!!";
+
+        //Act
+        string result = TextFilter.Filter(bannedWords, text);
+
+        //Assert
+        Assert.That(result, Is.EqualTo(expected));
+
     }
 
     [Test]
     public void Test_Filter_WhenBannedWordsAreEmpty_ShouldReturnOriginalText()
     {
-        // TODO: finish the test
+        // Arrange
+        string[] bannedWords = Array.Empty<string>();
+        string text = "Lorem ipsum dolor sit amet.";
+        string expected = "Lorem ipsum dolor sit amet.";
+
+        // Act
+        string result = TextFilter.Filter(bannedWords, text);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_Filter_WhenBannedWordsContainWhitespace_ShouldReplaceBannedWord()
     {
-        // TODO: finish the test
+
+        //Arrange
+        string[] bannedWords = { " crap", "hell " };
+        string text = "Holly crap! Why don't you go to hell!!!";
+        string expected = "Holly*****! Why don't you go to hell!!!";
+
+        //Act
+        string result = TextFilter.Filter(bannedWords, text);
+
+        //Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
