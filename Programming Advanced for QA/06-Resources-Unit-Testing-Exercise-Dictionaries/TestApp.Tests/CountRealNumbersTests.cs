@@ -11,11 +11,13 @@ public class CountRealNumbersTests
     public void Test_Count_WithEmptyArray_ShouldReturnEmptyString()
     {
         // Arrange
+        int[] nums = Array.Empty<int>();
 
         // Act
+        string result = CountRealNumbers.Count(nums);
 
         // Assert
-        //Assert.That(result, Is.Empty);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
