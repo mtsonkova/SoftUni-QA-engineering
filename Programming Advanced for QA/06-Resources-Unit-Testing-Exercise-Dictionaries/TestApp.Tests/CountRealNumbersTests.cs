@@ -38,7 +38,7 @@ public class CountRealNumbersTests
     {
         // Arrange
         int[] nums = { 4, 6, 8, 3, 8, 1, 1, 1 };
-        string expected = "1 -> 3\r\n3 -> 2\r\n4 -> 1\r\n6 -> 1\r\n8 -> 2";
+        string expected = "1 -> 3\r\n3 -> 1\r\n4 -> 1\r\n6 -> 1\r\n8 -> 2";
         // Act
         string result = CountRealNumbers.Count(nums);
 
