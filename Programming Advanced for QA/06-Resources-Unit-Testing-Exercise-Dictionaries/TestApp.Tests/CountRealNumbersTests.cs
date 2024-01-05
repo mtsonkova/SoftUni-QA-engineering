@@ -23,24 +23,52 @@ public class CountRealNumbersTests
     [Test]
     public void Test_Count_WithSingleNumber_ShouldReturnCountString()
     {
-        // TODO: finish test
+        // Arrange
+        int[] nums = { 4 };
+        string expected = "4 -> 1";
+        // Act
+        string result = CountRealNumbers.Count(nums);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_Count_WithMultipleNumbers_ShouldReturnCountString()
     {
-        // TODO: finish test
+        // Arrange
+        int[] nums = { 4, 6, 8, 3, 8, 1, 1, 1 };
+        string expected = "1 -> 3\r\n3 -> 2\r\n4 -> 1\r\n6 -> 1\r\n8 -> 2";
+        // Act
+        string result = CountRealNumbers.Count(nums);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_Count_WithNegativeNumbers_ShouldReturnCountString()
     {
-        // TODO: finish test
+        // Arrange
+        int[] nums = { 4, 6, -8, 3, -8, -1, -1, -1 };
+        string expected = "-8 -> 2\r\n-1 -> 3\r\n3 -> 1\r\n4 -> 1\r\n6 -> 1";
+        // Act
+        string result = CountRealNumbers.Count(nums);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_Count_WithZero_ShouldReturnCountString()
     {
-        // TODO: finish test
+        // Arrange
+        int[] nums = {0, 1, 1 };
+        string expected = "0 -> 1\r\n1 -> 2";
+        // Act
+        string result = CountRealNumbers.Count(nums);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
