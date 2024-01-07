@@ -24,25 +24,54 @@ namespace TeamProjects
                 }
                 else
                 {
-                    for(int j = 0; i <  teams.Count; i++)
+                    bool containsTeamName = teams.Any(team => team.name == teamName);
+                    bool containsTeamCreator = teams.Any(team => team.creator == creatorName);
+
+                    if (containsTeamName)
                     {
-                        if (teams[i].name == teamName)
-                        {
-                            Console.WriteLine($"Team {teamName} was already created!");
-                            break;
-                        }
-                        
-                        else if (teams[i].creator == creatorName)
-                        {
-                            Console.WriteLine($"{creatorName} cannot create another team!");
-                            break;
-                        }
+                        Console.WriteLine($"Team {teamName} was already created!");
+                    }
+                    else if (containsTeamCreator)
+                    {
+                        Console.WriteLine($"{creatorName} cannot create another team!");
                     }
 
-                    teams.Add(team);
-                    Console.WriteLine($"Team {teamName} has been created by {creatorName}!");
+                    else
+                    {
+                        teams.Add(team);
+                        Console.WriteLine($"Team {teamName} has been created by {creatorName}!");
+                    }                    
                 }
+               
             }
+            string userInput = Console.ReadLine();
+
+            while(userInput != "end of assignment")
+            {
+                string[] teamInfo = userInput.Split("->");
+                string member = teamInfo[0];
+                string teamName = teamInfo[1];
+
+                bool containsTeamName = teams.Any(team => team.name == teamName);
+                bool containsMember = teams.Any(team => team.members.Contains(member));
+
+                if(containsTeamName == false)
+                {
+                    Console.WriteLine($"Team {teamName} does not exist!");
+                } 
+                else if(containsMember) 
+                {
+                    Console.WriteLine($"Member {member} cannot join team {teamName}!");
+                }
+                else
+                {
+                   Team currentTeam = teams.Find(team => team.name == teamName);
+                    currentTeam.members.Add(member);
+                }
+
+                userInput = Console.ReadLine();
+            }
+
         }
     }
 }
