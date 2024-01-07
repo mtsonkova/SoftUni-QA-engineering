@@ -17,6 +17,11 @@ namespace Students
             this.firstName = firstName;
             this.lastName = lastName;
             this.grade = grade;
-        }        
+        }
+
+        public override string ToString()
+        {
+            return $"{this.firstName} - {this.lastName}: {this.grade}".Trim();
+        }
     }
 }

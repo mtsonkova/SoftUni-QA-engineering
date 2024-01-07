@@ -24,7 +24,7 @@
            var sortedList = students.OrderByDescending(student => student.grade);
             foreach(Student student in sortedList)
             {
-                Console.WriteLine($"{student.firstName} {student.lastName} {student.grade}");
+                Console.WriteLine(student.ToString);
             }
 
         }
