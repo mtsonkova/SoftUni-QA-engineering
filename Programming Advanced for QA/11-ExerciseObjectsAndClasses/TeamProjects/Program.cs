@@ -19,13 +19,14 @@ namespace TeamProjects
 
                 if(teams.Count == 0)
                 {
+                    team.getMembers().Add(creatorName);
                     teams.Add(team);
                     Console.WriteLine($"Team {teamName} has been created by {creatorName}!");
                 }
                 else
                 {
-                    bool containsTeamName = teams.Any(team => team.name == teamName);
-                    bool containsTeamCreator = teams.Any(team => team.creator == creatorName);
+                    bool containsTeamName = teams.Any(team => team.getName() == teamName);
+                    bool containsTeamCreator = teams.Any(team => team.getCreator() == creatorName);
 
                     if (containsTeamName)
                     {
@@ -38,6 +39,7 @@ namespace TeamProjects
 
                     else
                     {
+                        team.getMembers().Add(creatorName);
                         teams.Add(team);
                         Console.WriteLine($"Team {teamName} has been created by {creatorName}!");
                     }                    
@@ -52,10 +54,20 @@ namespace TeamProjects
                 string member = teamInfo[0];
                 string teamName = teamInfo[1];
 
-                bool containsTeamName = teams.Any(team => team.name == teamName);
-                bool containsMember = teams.Any(team => team.members.Contains(member));
+                bool containsTeamName = teams.Any(team => team.getName() == teamName);
+                bool containsMember = false;
+               
+               for(int j = 0; j < teams.Count; j++)
+                {
+                    List<string> currentTeamMembers = teams[j].getMembers();
+                    if(currentTeamMembers.Contains(member))
+                    {
+                        containsMember = true;
+                        break;
+                    }
+                }
 
-                if(containsTeamName == false)
+                if (containsTeamName == false)
                 {
                     Console.WriteLine($"Team {teamName} does not exist!");
                 } 
@@ -65,13 +77,47 @@ namespace TeamProjects
                 }
                 else
                 {
-                   Team currentTeam = teams.Find(team => team.name == teamName);
-                    currentTeam.members.Add(member);
+                   Team currentTeam = teams.Find(team => team.getName() == teamName);
+                    currentTeam.getMembers().Add(member);
                 }
 
                 userInput = Console.ReadLine();
             }
 
-        }
+            List<Team> validTeams = teams.FindAll(team => team.getMembers().Count > 1);
+
+            List<Team> teamsToDisband = teams.FindAll(team => team.getMembers().Count == 1);
+
+            var sortedValidTeams = validTeams
+                .OrderByDescending(team => team.getMembers().Count())
+                .ThenBy(team => team.getName())
+                .ToList();
+
+            var sortedTeamsToDisband = teamsToDisband.OrderBy(team => team.getName()).ToList();
+
+            List<string> validMembersList = new List<string>();
+            // Print valid Teams
+            
+            foreach (Team team in sortedValidTeams)
+            {
+                Console.WriteLine(team.getName());
+                Console.WriteLine($"-{team.getCreator()}");
+               
+               validMembersList = team.getMembers();
+                
+                for(int i = 1; i < validMembersList.Count; i++)
+                {
+                    string currentName = validMembersList[i];
+                    Console.WriteLine($"--{currentName}");
+                }
+            }
+
+            Console.WriteLine("Teams to disband:");
+            foreach(Team invalidTeam in sortedTeamsToDisband)
+            {
+                Console.WriteLine(invalidTeam.getName());
+            }
+            
+        }        
     }
 }
