@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-
+using System;
 using System.Collections.Generic;
 
 namespace TestApp.UnitTests;
@@ -25,11 +25,14 @@ public class NumberProcessorTests
     public void Test_ProcessNumbers_SquareRootOddNumbers()
     {
         // Arrange
-
-        // Act
+        List<int> input = new() { 9, 25, 49 };
+        List<double> expected = new() { 3, 5, 7 };
         
+        // Act
+        List<double> actual = NumberProcessor.ProcessNumbers(input);
+
         // Assert
-        //CollectionAssert.AreEqual(expected, actual);
+        CollectionAssert.AreEqual(expected, actual);        
     }
 
     // TODO: finish test
@@ -41,19 +44,36 @@ public class NumberProcessorTests
         List<int> expected = new() { 0 };
 
         // Act
+        List<double> actual = NumberProcessor.ProcessNumbers(input);
 
         // Assert
+        CollectionAssert.AreEqual(expected, actual);
+        
     }
 
     [Test]
     public void Test_ProcessNumbers_HandleNegativeNumbers()
     {
-        // TODO: finish test
+        // Arrange
+        List<int> input = new() { -5, -4, -9 };
+        List<int> expected = new() { 0 };
+
+        // Act $ Assert
+        Assert.Throws<ArgumentException>(() => NumberProcessor.ProcessNumbers(input));     
+
     }
 
     [Test]
     public void Test_ProcessNumbers_EmptyInput()
     {
-        // TODO: finish test
+        // Arrange
+        List<int> input = new() { };
+        List<int> expected = new() { };
+
+        // Act
+        List<double> actual = NumberProcessor.ProcessNumbers(input);
+
+        // Assert
+        CollectionAssert.AreEqual(expected, actual);
     }
 }

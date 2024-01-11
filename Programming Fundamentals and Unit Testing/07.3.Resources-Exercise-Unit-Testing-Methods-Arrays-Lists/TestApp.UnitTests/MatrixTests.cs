@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-
+using System;
 using System.Collections.Generic;
 
 namespace TestApp.UnitTests;
@@ -12,31 +12,53 @@ public class MatrixTests
     {
         // Arrange
         List<List<int>> matrixA = new() { new() { 1, 2 }, new() { 3, 4 } };
-        List<List<int>> matrixB;
-        List<List<int>> expected = new() { new() { 6, 8 }, new() { 10, 12 } };
+        List<List<int>> matrixB = new() { new() { 6, 8 }, new() { 10, 12 } };
+        List<List<int>> expected = new() { new() { 7, 10 }, new() { 13, 16 } };
 
         // Act
-
+        List<List<int>> result = Matrix.MatrixAddition(matrixA, matrixB);
         // Assert
-        //Assert.That(result, Is.EqualTo(expected));
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_MatrixAddition_EmptyMatrices_ReturnsEmptyMatrix()
     {
-        // TODO: finish test
+        // Arrange
+        List<List<int>> matrixA = new() { };
+        List<List<int>> matrixB = new() { };
+        List<List<int>> expected = new() { };
+
+        // Act
+        List<List<int>> result = Matrix.MatrixAddition(matrixA, matrixB);
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
     public void Test_MatrixAddition_DifferentDimensions_ThrowsArgumentException()
     {
-        // TODO: finish test
+        // Arrange
+        List<List<int>> matrixA = new() { new() { 1, 2 }, new() { 3, 4 } };
+        List<List<int>> matrixB = new() { new() { 6, 8 }, new() { 10, 12, 9, 5 }, new() { 10, 12, 9, 5 } };
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => Matrix.MatrixAddition(matrixA, matrixB));
+
     }
 
     [Test]
     public void Test_MatrixAddition_NegativeNumbers_ReturnsCorrectResult()
     {
-        // TODO: finish test
+        // Arrange
+        List<List<int>> matrixA = new() { new() { -1, -2 }, new() { -3, -4 } };
+        List<List<int>> matrixB = new() { new() { -1, -2 }, new() { -3, -4 } };
+        List<List<int>> expected = new() { new() { -2, -4 }, new() { -6, -8 } };
+
+        // Act
+        List<List<int>> result = Matrix.MatrixAddition(matrixA, matrixB);
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     // TODO: finish test
@@ -44,11 +66,13 @@ public class MatrixTests
     public void Test_MatrixAddition_ZeroMatrix_ReturnsOriginalMatrix()
     {
         // Arrange
+        List<List<int>> matrixA = new() { new() { 1, 2 }, new() { 3, 4 } };
+        List<List<int>> matrixB = new() { new() { 0, 0 }, new() { 0, 0 } };
 
         // Act
-        //List<List<int>> result = Matrix.MatrixAddition(matrixA, matrix0);
+        List<List<int>> result = Matrix.MatrixAddition(matrixA, matrixB);
 
         // Assert
-        //Assert.That(result, Is.EqualTo(matrixA));
+        Assert.That(result, Is.EqualTo(matrixA));
     }
 }
