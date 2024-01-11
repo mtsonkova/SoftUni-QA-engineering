@@ -10,21 +10,34 @@ public class EmailTests
     {
         // Arrange
         string validEmail = "test@example.com";
-
+       
         // Act
-
+        bool actual = Email.IsValidEmail(validEmail);
         // Assert
+        Assert.IsTrue(actual);
     }
 
     [Test]
     public void Test_IsValidEmail_InvalidEmail()
     {
-        // TODO: finish test
+        // Arrange
+        string validEmail = "test.com";
+
+        // Act
+        bool actual = Email.IsValidEmail(validEmail);
+        // Assert
+        Assert.IsFalse(actual);
     }
 
     [Test]
     public void Test_IsValidEmail_NullInput()
     {
-        // TODO: finish test
+        // Arrange
+        string validEmail = null;
+
+        // Act
+        bool actual = Email.IsValidEmail(validEmail);
+        // Assert
+        Assert.IsFalse(actual);
     }
 }
