@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.ComponentModel.Design;
+using System.Linq;
 
 namespace ArraysAndLists
 {
@@ -10,39 +12,23 @@ namespace ArraysAndLists
             int[] nums = Console.ReadLine().Split(" ").Select(num => int.Parse(num)).ToArray();
 
             List<int> topInts = new List<int>();
-            bool isBigger = false;
-            int currentNum = 0;
-            int lastBiggestNum = 0;
-           
-            for(int i = 0; i <  nums.Length - 1; i++)
+            int biggestNum = 0;
+
+            List<int> numbers = nums.ToList();
+            while(numbers.Count > 0)
             {
-                int numI = nums[i];
-               for( int j = 1; j < nums.Length; j++)
+                biggestNum = numbers.Max(num => num);
+                if (topInts.Contains(biggestNum) == false)
                 {
-                    int numj = nums[j];
-                    
-                    if (numj >= numI && numj > lastBiggestNum)
-                    {
-                        isBigger = true;
-                        currentNum = numj;
-
-                        if (isBigger && topInts.Contains(currentNum) == false)
-                        {
-                            topInts.Add(currentNum);
-                            lastBiggestNum = currentNum;
-                        }
-                    }
-
-                    
+                    topInts.Add(biggestNum);
                 }
-
-                
-
-            }           
+                numbers.RemoveRange(0, numbers.IndexOf(biggestNum) + 1);
+            }
+            //topInts.Add(nums[nums.Length - 1]);
 
             Console.WriteLine(String.Join(" ", topInts));
+
         }
 
-       
     }
 }
