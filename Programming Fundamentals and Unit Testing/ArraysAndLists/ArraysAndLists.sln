@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxSequenceOfEqualElements"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayRotation", "ArrayRotation\ArrayRotation.csproj", "{55F6C67D-5E6E-4980-A174-2F826772AC2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZigZagArrays", "ZigZagArrays\ZigZagArrays.csproj", "{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{55F6C67D-5E6E-4980-A174-2F826772AC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55F6C67D-5E6E-4980-A174-2F826772AC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55F6C67D-5E6E-4980-A174-2F826772AC2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
