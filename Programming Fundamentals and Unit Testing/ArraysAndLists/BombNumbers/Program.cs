@@ -11,16 +11,24 @@
             //1 4 4 2 8 9 1
             //9 3
 
-            while (nums.Contains(bomb)) {
+            while (nums.Contains(bomb))
+            {
                 int bombIndex = nums.IndexOf(bomb);
                 int startIndex = bombIndex - bombPower;
-                int endIndex = (bombPower * 2) + 1;
+                int endIndex = bombIndex + bombPower;
 
-                if(startIndex < 0) { startIndex = 0; }
-                if(endIndex >  nums.Count - 1) { endIndex = nums.Count - 1; }
+                if (startIndex < 0) { startIndex = 0; }
+                if (endIndex > nums.Count - 1) { endIndex = nums.Count - 1; }
+                int elementCounter = 0;
 
-                nums.RemoveRange(startIndex, endIndex);
-                          }
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    elementCounter++;
+                }
+
+                nums.RemoveRange(startIndex, elementCounter);
+
+            }
 
             int sum = nums.Sum();
 
