@@ -7,13 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopIntegers", "ArraysAndLis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxSequenceOfEqualElements", "MaxSequenceOfEqualElements\MaxSequenceOfEqualElements.csproj", "{33C65D76-B8A8-4ECA-BFA2-0535265CD444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayRotation", "ArrayRotation\ArrayRotation.csproj", "{55F6C67D-5E6E-4980-A174-2F826772AC2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArrayRotation", "ArrayRotation\ArrayRotation.csproj", "{55F6C67D-5E6E-4980-A174-2F826772AC2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZigZagArrays", "ZigZagArrays\ZigZagArrays.csproj", "{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZigZagArrays", "ZigZagArrays\ZigZagArrays.csproj", "{58CD1FDF-E46E-45E3-B0FD-5C20850D9F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsGame", "CardsGame\CardsGame.csproj", "{C6AB2896-5EC7-4DAE-B00A-6ECA5822BD84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardsGame", "CardsGame\CardsGame.csproj", "{C6AB2896-5EC7-4DAE-B00A-6ECA5822BD84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BombNumbers", "BombNumbers\BombNumbers.csproj", "{C62C38B5-7A65-4F19-9FF2-D1D179D8FEC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BombNumbers", "BombNumbers\BombNumbers.csproj", "{C62C38B5-7A65-4F19-9FF2-D1D179D8FEC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SumAdjastentEqualNums", "SumAdjastentEqualNums\SumAdjastentEqualNums.csproj", "{94587FF2-2148-448F-9216-3CEB1E996798}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C62C38B5-7A65-4F19-9FF2-D1D179D8FEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C62C38B5-7A65-4F19-9FF2-D1D179D8FEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C62C38B5-7A65-4F19-9FF2-D1D179D8FEC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94587FF2-2148-448F-9216-3CEB1E996798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94587FF2-2148-448F-9216-3CEB1E996798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94587FF2-2148-448F-9216-3CEB1E996798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94587FF2-2148-448F-9216-3CEB1E996798}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
