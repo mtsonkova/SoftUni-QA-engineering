@@ -1,11 +1,11 @@
 {
   "name": "unittestingjs",
   "version": "1.0.0",
+  "description": "",
   "type": "module",
-  "description": "Exercises for unit testing with JS",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha ./*spec.js"
   },
   "author": "",
   "license": "ISC",
