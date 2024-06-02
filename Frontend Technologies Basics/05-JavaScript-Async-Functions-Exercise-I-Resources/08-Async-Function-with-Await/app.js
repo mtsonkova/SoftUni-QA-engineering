@@ -1,3 +1,13 @@
 async function simplePromiseAsync() {
-    // TODO
+    let promise = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve('Async/Await is awesome!');
+        }, 2000)
+    })
+
+    let result = await promise;
+    console.log(result);
 }
+
+let button = document.querySelector("button");
+button.addEventListener("click", simplePromiseAsync());
