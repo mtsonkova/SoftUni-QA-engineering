@@ -1,12 +1,12 @@
-function simplePromise() {
-    new Promise(function (resolve, reject) {
+async function simplePromise() {
+    let promise = new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve('Success!');
         }, 2000);
-    })
-        .then(function (res) {
-            console.log(res);
-        });
+    });
+
+
+    let result = await promise;
+    console.log(result);
 }
 
-simplePromise();

@@ -1,11 +1,13 @@
-function promiseRejection() {
-    new Promise(function(resolve, reject) {
-                setTimeout(function() {
-        reject('Something went wrong!');
+async function promiseRejection() {
+    let promise = new Promise(function(resolve, reject) {
+        setTimeout(function() { 
+                reject('Something went wrong!')
 
-        }, 1000);
-        })
-        .catch(function(reject) {
-        console.log(reject);
-        });
+        }, 1000)
+    }); 
+
+    promise.catch(function(error) {
+        console.log(error);
+    })
+
 }
