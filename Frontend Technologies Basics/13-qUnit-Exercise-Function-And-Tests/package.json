@@ -1,0 +1,15 @@
+{
+  "name": "13-qunit-exercise-function-and-tests",
+  "version": "1.0.0",
+  "main": "sum_tests.spec.js",
+  "scripts": {
+    "test": "qunit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "qunit": "^2.21.0"
+  }
+}
