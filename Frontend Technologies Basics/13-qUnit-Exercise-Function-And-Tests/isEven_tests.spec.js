@@ -26,6 +26,6 @@ QUnit.module('isEven function tests', () => {
     });
     QUnit.test('Test with odd floating point number should return false', function (assert) {
         assert.false(isEven(3.41), false, 'Test with odd floating point number should return false');
-        console.log(3.41 % 2);
+       
     });
 })
