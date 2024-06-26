@@ -13,6 +13,13 @@ let user = {
     confimrPass: '123456'
 };
 
+let game = {
+    title: '',
+    category: '',
+    maxLevel: '',
+    imageUrl: '',
+    summary: ''
+}
 
 describe('gamesApp e2e tests', () => {
     // use beforeAll and afterAll
@@ -32,7 +39,7 @@ describe('gamesApp e2e tests', () => {
 
     afterEach(async () => {
         await page.close();
-        await context.close()
+        await context.close();
     });
 
     describe('authentication', () => {
@@ -172,5 +179,79 @@ describe('gamesApp e2e tests', () => {
 
             //
         })
+    });
+
+    describe('CRUD operations', () => {
+        beforeEach(async() => {
+            await page.goto(host);
+            await page.click('text=Login');
+            await page.waitForSelector('form');
+
+            let random = Math.floor(Math.random() * 10000);
+            user.email = `abv_${random}@abv.bg`;
+            await page.locator('#email').fill(user.email);
+            await page.locator('#login-password').fill(user.password);
+        
+            await page.click('[type="submit"]');
+        });
+
+
+        test('Edit and delete buttons are not visible on Non-Owner gamae', async() => {
+            await page.click('text=All Games');
+          let elementDetails = await page.locator('.details-button').first();
+
+          //act
+          await elementDetails.click();
+      
+          //assert
+
+            expect(page.locator('text=Edit')).toBeHidden;
+            expect(page.locator('text=Delete')).toBeHidden;
+        });
+
+        test('create new game with valid data', async() => {
+            //arange
+
+            game.title = 'Halo Universe';
+            game.category = 'Action and 3D person shooter';
+            game.maxLevel = '100';
+            game.imageUrl = 'halo/masterchief.png'
+            game.summary = 'Cool game for all fans of 3D shooting.';
+           
+            await page.click('text=Create Game');
+            await page.locator('#title').fill(`${game.title}`);
+            await page.locator('#category').fill(`${game.category}`);
+            await page.locator('#maxLevel').fill(`${game.maxLevel}`);
+            await page.locator('#imageUrl').fill(`${game.image}`);
+            await page.locator('#summary').fill(`${game.summary}`);
+
+            //act
+            let [response] = await Promise.all([response => response.url().includes('/data/games') && response.status() === 200,
+                page.click('[type="submit"]')                
+            ]);
+            
+            //assert
+            expect(response.ok).toBeTruthy();
+
+            let json = await response.json();
+
+            expect(json.title).toEqual(game.title);
+            expect(json.category).toEqual(game.category);
+            expect(json.maxLevel).toEqual(game.maxLevel);
+            expect(json.imageUrl).toEqual(game.imageUrl);
+            expect(json.summary).toEqual(game.summary);
+
+        });
+
+        test('create game with empty fields should not work', async() => {
+            //arange
+            await page.click('text=Create Game');
+
+            //act
+            page.click('[type="submit"]');
+
+            //assert
+            expect(page.url()).toEqual(host + '/data/games');
+        });
     });
 });
