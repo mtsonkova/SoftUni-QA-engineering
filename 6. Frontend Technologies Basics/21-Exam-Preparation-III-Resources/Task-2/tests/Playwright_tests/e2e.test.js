@@ -8,13 +8,10 @@ let context;
 let page;
 
 let user = {
-    email: "",
-    password: "123456",
-    confirmPass: "123456",
+    email : "",
+    password : "123456",
+    confirmPass : "123456",
 };
-
-let homeUrl = host + '/';
-
 
 describe("e2e tests", () => {
     beforeAll(async () => {
@@ -35,38 +32,38 @@ describe("e2e tests", () => {
         await context.close();
     });
 
-
+    
     describe("authentication", () => {
-        test('Register with valid data', async () => {
+        test('Register user makes the correct API call and registers user successfully', async() => {
             //arange
+            let random = Math.floor(Math.random() * 10000);
+            let email = `email${random}@abv.bg`;
+            user.email = email;
+
             await page.goto(host);
             await page.click('text=Register');
             await page.waitForSelector('form');
-
-            let random = Math.floor(Math.random() * 10000);
-            user.email = `email${random}@abv.bg`;
 
             //act
             await page.locator('#email').fill(user.email);
             await page.locator('#password').fill(user.password);
             await page.locator('#repeat-pass').fill(user.confirmPass);
 
-            let [response] = await Promise.all([
+            let [registerResponse] = await Promise.all([
                 page.waitForResponse(response => response.url().includes('/users/register') && response.status() == 200),
                 page.click('[type="submit"]')
             ]);
 
             //assert
-            await expect(response.ok()).toBeTruthy();
-
-            let userData = await response.json();
+            await expect(registerResponse.ok()).toBeTruthy();
+            let userData = await registerResponse.json();
 
             await expect(userData.email).toBe(user.email);
             await expect(userData.password).toBe(user.password);
+
         });
 
-        test('Login with valid data', async () => {
-            // arange
+        test('Login user with valid credentials makes the correct API call and logs in user successfully', async() => {
             await page.goto(host);
             await page.click('text=Login');
             await page.waitForSelector('form');
@@ -75,164 +72,155 @@ describe("e2e tests", () => {
             await page.locator('#email').fill(user.email);
             await page.locator('#password').fill(user.password);
 
-            let [response] = await Promise.all([
+            let [loginResponse] = await Promise.all([
                 page.waitForResponse(response => response.url().includes('/users/login') && response.status() == 200),
                 page.click('[type="submit"]')
             ]);
 
             //assert
-            await expect(response.ok()).toBeTruthy();
-
-            let userData = await response.json();
+            await expect(loginResponse.ok()).toBeTruthy();
+            let userData = await loginResponse.json();
 
             await expect(userData.email).toBe(user.email);
             await expect(userData.password).toBe(user.password);
 
         });
 
-        test('Logout from the application', async () => {
-            //arrange
-
+        test('Log out makes the correct API call and logs out user successfully', async() => {
             await page.goto(host);
+            await page.click('text=Login');
+            await page.waitForSelector('form');
+
+            //act
+            await page.locator('#email').fill(user.email);
+            await page.locator('#password').fill(user.password);
+            await page.click('[type="submit"]');
+
+            let [logoutResponse] = await Promise.all([
+                page.waitForResponse(response => response.url().includes('/users/logout') && response.status() == 204),
+                page.click('text=Logout')
+            ]);
+
+            await expect(logoutResponse.ok()).toBeTruthy();
+            await expect(page.url()).toBe(host + '/' || host + '/logout');
+            let logInBtn = page.locator('text=Login');
+            await expect(logInBtn).toBeVisible();
+        });
+    })
+
+    describe("navbar", () => {
+        test('Check the Navbar for Logged-In user', async() => {
+            //arange
+            await page.goto(host);
+            
+            //act
             await page.click('text=Login');
             await page.waitForSelector('form');
             await page.locator('#email').fill(user.email);
             await page.locator('#password').fill(user.password);
             await page.click('[type="submit"]');
 
+            //assert
+            expect(await page.locator('navbar >> text=Dashboard').toBeVisible);
+            expect(await page.locator('text=My Books').toBeVisible);
+            expect(await page.locator('text=Add Book').toBeVisible);
+            expect(await page.locator('text=Logout').toBeVisible);
+            expect(await page.locator('text=Login').toBeHidden);
+            expect(await page.locator('text=Register').toBeHidden);
+        });
+
+        test('Check the Navbar for guest user', async() => {
+           //act
+            await page.goto(host);
+            
+            //assert
+            expect(await page.locator('text=Dashboard').toBeVisible);
+            expect(await page.locator('text=My Books').toBeHidden);
+            expect(await page.locator('text=Add Book').toBeHidden);
+            expect(await page.locator('text=Logout').toBeHidden);
+            expect(await page.locator('text=Login').toBeVisible);
+            expect(await page.locator('text=Register').toBeVisible);
+        });
+    });
+
+    describe("CRUD", () => {
+        beforeEach(async () => {
+            await page.goto(host);
+            await page.click('text=Login');
+           await page.waitForSelector('form');
+           await page.locator("#email").fill(user.email);
+           await page.locator("#password").fill(user.password);
+           await page.click('[type="submit"]');
+        });
+       
+        test('Create book call the correct API and book is added successfully', async() => {
+           //arrange
+        
+           await page.click('text=Add Book');
+           await page.waitForSelector('form');
+
             //act
-            let [response] = await Promise.all([
-                page.waitForResponse(response => response.url().includes('/users/logout') && response.status() == 204),
-                page.click('text=Logout')
+            await page.fill('[name="title"]', "Random title");
+            await page.fill('[name="description"]', "Random description");
+            await page.fill('[name="imageUrl"]', "https://jpeg.org/images/jpeg-home.jpg");
+            await page.locator('#type').selectOption('Other');
+            
+            let [addBookResponse] = await Promise.all([
+                page.waitForResponse(response => response.url().includes('/data/books') && response.status() === 200),
+                page.click('[type="submit"]')
             ]);
 
-            //assert
-            await expect(response.ok()).toBeTruthy();
-            await page.waitForSelector('text=Login');
-            await expect(page.url()).toBe(homeUrl);
+            await expect(addBookResponse.ok()).toBeTruthy();
+
+            let bookData = await addBookResponse.json();
+
+            await expect(bookData.title).toEqual('Random title');
+            await expect(bookData.description).toEqual('Random description');
+            await expect(bookData.imageUrl).toEqual('https://jpeg.org/images/jpeg-home.jpg');
+
+            await expect(bookData.type).toEqual('Other');
+        });
+
+        test('Edit book calls the correct API and a book is edited successfully', async() => {
+            //arange
+            await page.click('text=My Books');
+            await page.locator(`text=Details`).first().click();
+            await page.click('text=Edit');
+            await page.waitForSelector('form');
+
+            //act
+            await page.fill('[name="title"]', "Edit Random title");
+            await page.fill('[name="description"]', "Edit Random description");
+            await page.fill('[name="imageUrl"]', "https://jpeg.org/images/jpeg-home3.jpg");
+            await page.locator('#type').selectOption('Fiction');
+            
+            let [editBookResponse] = await Promise.all([
+                page.waitForResponse(response => response.url().includes('/data/books') && response.status() === 200),
+                page.click('text=Edit')
+            ]);
+
+            await expect(editBookResponse.ok()).toBeTruthy();
+
+            let bookData = await editBookResponse.json();
+
+            await expect(bookData.title).toEqual('Edit Random title');
+            await expect(bookData.description).toEqual('Edit Random description');
+            await expect(bookData.imageUrl).toEqual('https://jpeg.org/images/jpeg-home3.jpg');
+
+            await expect(bookData.type).toEqual('Fiction');
 
         });
 
-    })
+        test('Delete book makes the correct API call and a book is deleted successfully', async() => {
+            await page.click('text=My Books');
+            await page.locator(`text=Details`).first().click();
 
-    describe("navbar", () => {
-        test('Test the navbar for guest user', async () => {
-            //arrange
-            await page.goto(host);
+            let [deleteBookResponse] = await Promise.all([
+                page.waitForResponse(response => response.url().includes('/data/books') && response.status() === 200),
+                page.click('text=Delete')
+            ]);
 
-            //assert
-            await expect(page.locator('nav >> text=Dashboard')).toBeVisible;
-            await expect(page.locator('nav >> text=My Books')).toBeHidden;
-            await expect(page.locator('nav >> text=Add Book')).toBeHidden;
-            await expect(page.locator('nav >> text=Logout')).toBeHidden;
-            await expect(page.locator('nav >> text=Login')).toBeVisible;
-            await expect(page.locator('nav >> text=Register')).toBeVisible;
+            expect(deleteBookResponse.ok()).toBeTruthy();
         });
-
-    });
-
-    test('Test navbar for Logged-in user', async () => {
-        //arrange
-        await page.goto(host);
-
-        //act
-        await page.click('text=Login');
-        await page.waitForSelector('form');
-        await page.locator('#email').fill(user.email);
-        await page.locator('#password').fill(user.password);
-        await page.click('[type="submit"]');
-
-        //assert
-        await expect(page.locator('nav >> text=Dashboard')).toBeVisible;
-        await expect(page.locator('nav >> text=My Books')).toBeVisible;
-        await expect(page.locator('nav >> text=Add Book')).toBeVisible;
-        await expect(page.locator('nav >> text=Logout')).toBeVisible;
-        await expect(page.locator('nav >> text=Login')).toBeHidden;
-        await expect(page.locator('nav >> text=Register')).toBeHidden;
-    });
-});
-
-describe("CRUD", () => {
-    beforeEach(async () => {
-
-        await page.goto(host);
-
-        await page.click('text=Login');
-        await page.waitForSelector('form');
-        await page.locator('#email').fill(user.email);
-        await page.locator('#password').fill(user.password);
-        await page.click('[type="submit"]');
-    });
-
-    test('Test Create a book functionality', async () => {
-        //arrange
-        await page.click('text=Add Book');
-        await page.waitForSelector('form');
-
-        //act
-
-        await page.locator('#title').fill('Random Title');
-        await page.locator('#description').fill('Random description');
-        await page.locator('#imageUrl').fill('image.jpg');
-        await page.locator('#type').selectOption('Other');
-
-        //act
-        let [response] = await Promise.all([
-            page.waitForResponse(response => response.url().includes('/data/books') && response.status() == 200),
-            page.click('[type="Submit"]')
-        ]);
-
-        let bookData = await response.json();
-
-        //assert
-        await expect(response.ok()).toBeTruthy();
-        await expect(bookData.title).toBe('Random Title');
-        await expect(bookData.description).toBe('Random description');
-        await expect(bookData.imageUrl).toBe('image.jpg');
-        await expect(bookData.type).toBe('Other');
-    });
-
-    test('Edit a book functionality', async () => {
-        //arrange
-        await page.click('text=My Books');
-        await page.locator('text=Details').first().click();
-        await page.click('text=Edit');
-        await page.waitForSelector('form');
-
-        //act
-        await page.locator('#title').fill('Edited Random Title');
-        await page.locator('#description').fill('Edited Random description');
-        await page.locator('#type').selectOption('Other');
-        let [response] = await Promise.all([
-            page.waitForResponse(response => response.url().includes('/data/books') && response.status() == 200),
-            page.click('[type="Submit"]')
-        ]);
-
-        let bookData = await response.json();
-
-        //assert
-        await expect(response.ok()).toBeTruthy();
-        await expect(bookData.title).toBe('Edited Random Title');
-        await expect(bookData.description).toBe('Edited Random description');
-        await expect(bookData.imageUrl).toBe('image.jpg');
-        await expect(bookData.type).toBe('Other');
     })
-
-    test('Delete a book functionality', async () => {
-        await page.click('text=My Books');
-        await page.locator('text=Details').first().click();
-        await page.click('text=Delete');
-
-        let [response] = await Promise.all([
-            page.waitForResponse(response => response.url().includes('/data/books') && response.status() == 200),
-            page.click('text=Delete')
-        ]);
-
-        await expect(response.ok()).toBeTruthy();
-
-    })
-
-});
-
-
-//https://pastebin.com/zt9uYPup
+})
